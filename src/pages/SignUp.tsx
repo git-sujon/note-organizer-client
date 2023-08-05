@@ -1,34 +1,34 @@
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
-import { IUserLogin } from "../interface/authInterfaces";
+import { IUserSignUp } from "../interface/authInterfaces";
 
 
-const LoginPage = () => {
-  const onSubmit = async (inputData: IUserLogin) => {
-    console.log({ email: inputData?.email, password: inputData?.password });
+const SignUpPage = () => {
+  const onSubmit = async (inputData: IUserSignUp) => {
+    console.log({ name: inputData?.name, email: inputData?.email, password: inputData?.password });
   };
 
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } =  useForm<IUserLogin>();
+  } =  useForm<IUserSignUp>();
 
   return (
     <div className="h-full bg-slate-900 w-full py-16 px-4">
       <div className="flex flex-col items-center justify-center">
         <div className="bg-white shadow rounded lg:w-1/3  md:w-1/2 w-full p-10 mt-16">
           <p className="focus:outline-none text-2xl font-extrabold leading-6 text-gray-800">
-            Login to your account
+            Sign Up to your account 
           </p>
           <div className="focus:outline-none text-sm mt-4 font-medium leading-none text-gray-500">
-            Don't have account?{" "}
+          Already have an account
             <a
              href=""
-              className="hover:text-gray-500 focus:text-gray-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-gray-800 cursor-pointer"
+              className="hover:text-gray-500 focus:text-gray-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-gray-800 cursor-pointer ml-2"
             >
    
-              Sign up here
+              Login here
             </a>
           </div>
           <button
@@ -52,6 +52,23 @@ const LoginPage = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div>
               <label
+                id="name"
+                className="text-sm font-medium leading-none text-gray-800"
+              >
+                Name
+              </label>
+              <input
+                aria-labelledby="name"
+                type="name"
+                {...register("name", { required: "Name is required" })}
+                className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+              />
+              <p className="text-red-500">
+                {errors?.name ? errors.name.message : ""}
+              </p>
+            </div>
+            <div>
+              <label
                 id="email"
                 className="text-sm font-medium leading-none text-gray-800"
               >
@@ -67,21 +84,21 @@ const LoginPage = () => {
                 {errors?.email ? errors.email.message : ""}
               </p>
             </div>
-            <div className="mt-6  w-full">
+            <div className="  w-full">
               <label
                 htmlFor="pass"
                 className="text-sm font-medium leading-none text-gray-800"
               >
                 Password
               </label>
-              <div className="relative flex items-center justify-center">
+              <div className="">
                 <input
                   id="pass"
                   type="password"
                   {...register("password", {
                     required: "Password is required",
                   })}
-                  className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+                  className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2 "
                 />
 
                 <p className="text-red-500">
@@ -104,4 +121,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignUpPage;

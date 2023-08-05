@@ -1,4 +1,6 @@
-import Login from "./pages/Login";
+import LoginPage from "./pages/Login";
+import SignUpPage from "./pages/SignUp";
+
 
 
 function App() {
@@ -6,7 +8,7 @@ function App() {
 
   return (
     <div>
-      <Login/>
+      <SignUpPage/>
     </div>
   )
 }
