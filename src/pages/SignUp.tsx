@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { IUserSignUp } from "../interface/authInterfaces";
+import { Link } from "react-router-dom";
 
 
 const SignUpPage = () => {
@@ -23,13 +24,13 @@ const SignUpPage = () => {
           </p>
           <div className="focus:outline-none text-sm mt-4 font-medium leading-none text-gray-500">
           Already have an account
-            <a
-             href=""
+            <Link
+             to="/login"
               className="hover:text-gray-500 focus:text-gray-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-gray-800 cursor-pointer ml-2"
             >
    
               Login here
-            </a>
+            </Link>
           </div>
           <button
             aria-label="Continue with google"
