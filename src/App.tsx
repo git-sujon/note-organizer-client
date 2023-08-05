@@ -1,5 +1,4 @@
-
-import SignUpPage from "./pages/SignUp";
+import Home from "./pages/Home";
 
 
 
@@ -8,7 +7,7 @@ function App() {
 
   return (
     <div>
-      <SignUpPage/>
+      <Home/>
     </div>
   )
 }
