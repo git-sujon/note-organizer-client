@@ -4,6 +4,8 @@ import { useAppDispatch } from "./redux/hooks";
 import { setLoading, setUser } from "./redux/features/user/userSlice";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./components/lib/Firebase";
+import { Toaster } from "react-hot-toast";
+
 function App() {
   const dispatch = useAppDispatch();
 
@@ -19,11 +21,11 @@ function App() {
     });
   }, [dispatch]);
 
-  
   return (
-    <div>
+    <>
+      <Toaster />
       <Home />
-    </div>
+    </>
   );
 }
 
