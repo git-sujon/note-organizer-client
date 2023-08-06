@@ -1,17 +1,24 @@
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { IUserSignUp } from "../interface/authInterfaces";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../redux/hooks";
-import { createUser } from "../redux/features/user/userSlice";
+import {
+  createUser,
+  createUserWithGoogle,
+} from "../redux/features/user/userSlice";
+import authPromiseHandler from "../components/util/authPromise";
 
 const SignUpPage = () => {
-
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<IUserSignUp>();
   const dispatch = useAppDispatch();
-
+  const navigate = useNavigate();
   const onSubmit = async (inputData: IUserSignUp) => {
-
-    dispatch(
+    const result = await dispatch(
       createUser({
         userName: inputData?.name,
         imageUrl: inputData?.imageUrl,
@@ -19,14 +26,14 @@ const SignUpPage = () => {
         password: inputData?.password,
       })
     );
+    await authPromiseHandler(result, navigate);
   };
 
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm<IUserSignUp>();
+  const handleGoogleSignUP = async () => {
+    const result = await dispatch(createUserWithGoogle());
 
+    await authPromiseHandler(result, navigate);
+  };
   return (
     <div className="h-full bg-slate-900 w-full py-16 px-4">
       <div className="flex flex-col items-center justify-center">
@@ -44,6 +51,7 @@ const SignUpPage = () => {
             </Link>
           </div>
           <button
+            onClick={() => handleGoogleSignUP()}
             aria-label="Continue with google"
             role="button"
             className="focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-10"

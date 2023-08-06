@@ -1,11 +1,8 @@
 import { Link } from "react-router-dom";
 import { BiLogIn, BiSolidUserAccount } from "react-icons/bi";
-import { useAppSelector } from "../redux/hooks";
+
 const Home = () => {
 
-  const user  = useAppSelector((state) => state.user);
-
-  console.log("user:", user)
   return (
     <div className="min-h-screen bg-slate-900 flex justify-center items-center gap-5">
       <div className="">
