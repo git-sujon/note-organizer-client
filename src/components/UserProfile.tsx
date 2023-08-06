@@ -1,11 +1,9 @@
-import { useAppSelector } from "../redux/hooks";
+import { UserProfileProps } from "../interface/globalInterface";
 import Spinner from "./UI/Spinner";
 
-const UserProfile = () => {
-  const { user, isLoading } = useAppSelector((state) => state.user);
-
-  if(isLoading){
-    return <Spinner />
+const UserProfile: React.FC<UserProfileProps> = ({ user, isLoading }) => {
+  if (isLoading) {
+    return <Spinner />;
   }
 
   return (

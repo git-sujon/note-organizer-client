@@ -9,14 +9,15 @@ import { MdFormatListBulletedAdd } from "react-icons/md";
 import { Link, Outlet } from "react-router-dom";
 import { useState } from "react";
 import UserProfile from "../UserProfile";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../lib/Firebase";
 import { setLoading, setUser } from "../../redux/features/user/userSlice";
-import { toast } from "react-hot-toast/headless";
+import toast  from "react-hot-toast";
 import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 const DashboardLayout = () => {
+  const { user, isLoading } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const DashboardLayout = () => {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const handleLogout = () => {
+  const handleLogout = async() => {
     signOut(auth).then(() => {
       // Sign-out successful.
       dispatch(setUser(null));
@@ -59,7 +60,7 @@ const DashboardLayout = () => {
            {/* Sidebar */}
            <div
              id="sidebar"
-             className={`bg-white h-screen md:block shadow-xl px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden transition-transform duration-300 ease-in-out ${
+             className={`bg-white min-h-screen md:block shadow-xl px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden transition-transform duration-300 ease-in-out ${
                sidebarOpen ? "translate-x-0 " : "-translate-x-full"
              } md:translate-x-0 `}
            >
@@ -70,33 +71,33 @@ const DashboardLayout = () => {
                </h1>
    
                <div>
-                 <UserProfile />
+                 <UserProfile user={user} isLoading={isLoading} />
                </div>
    
                <div id="menu" className="flex flex-col space-y-2">
                  <Link
                    to="/dashboard"
-                   className="text-lg font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out flex items-center gap-1"
+                   className="  font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out flex items-center gap-1"
                  >
                    <BiSolidDashboard />
-                   <span className="">Dashboard</span>
+                   <span className="text-sm lg:text-lg">Dashboard</span>
                  </Link>
                  <Link
                    to="/dashboard/add-notes"
-                   className="text-lg font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out flex items-center gap-1"
+                   className="  font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out flex items-center gap-1"
                  >
                    <FiPaperclip />
-                   <span className="">Add Notes</span>
+                   <span className="text-sm lg:text-lg">Add Notes</span>
                  </Link>
                  <button
                    onClick={() => handleLogout()}
-                   className="text-lg font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out flex items-center gap-1"
+                   className="  font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out flex items-center gap-1"
                  >
                    <BiLogOutCircle />
-                   <span className=""> Sign Out</span>
+                   <span className="text-sm lg:text-lg"> Sign Out</span>
                  </button>
                  <div className="pt-10">
-                   <p className="text-lg font-semibold flex items-center gap-1">
+                   <p className="text-sm lg:text-lg font-semibold flex items-center gap-1">
                      <MdFormatListBulletedAdd className="text-2xl" /> Catagories
                    </p>
                    <hr />
