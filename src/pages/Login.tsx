@@ -2,10 +2,16 @@ import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { IUserLogin } from "../interface/authInterfaces";
 import { Link } from "react-router-dom";
+import {  loginUser } from "../redux/features/user/userSlice";
+import { useAppDispatch } from "../redux/hooks";
 
 
 const LoginPage = () => {
+
+  const dispatch = useAppDispatch()
+
   const onSubmit = async (inputData: IUserLogin) => {
+    dispatch(loginUser({ email: inputData?.email, password: inputData?.password }));
     console.log({ email: inputData?.email, password: inputData?.password });
   };
 

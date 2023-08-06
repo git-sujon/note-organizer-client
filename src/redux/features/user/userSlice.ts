@@ -1,58 +1,65 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 import {
+  User,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-} from 'firebase/auth';
-import { auth } from '../../../components/lib/Firebase';
+  updateProfile,
+} from "firebase/auth";
+import { auth } from "../../../components/lib/Firebase";
 
 interface IUserState {
-  user: {
-    email: string | null;
-  };
+  user: Partial<User> | null;
   isLoading: boolean;
   isError: boolean;
   error: string | null;
 }
 
-interface ICredential {
+interface ISignUpCredential {
+  userName: string;
+  imageUrl: string;
+  email: string;
+  password: string;
+}
+interface ILoginCredential {
   email: string;
   password: string;
 }
 
 const initialState: IUserState = {
-  user: {
-    email: null,
-  },
+  user: null,
   isLoading: false,
   isError: false,
   error: null,
 };
 
 export const createUser = createAsyncThunk(
-  'user/createUser',
-  async ({ email, password }: ICredential) => {
+  "user/createUser",
+  async ({ userName, imageUrl, email, password }: ISignUpCredential) => {
     const data = await createUserWithEmailAndPassword(auth, email, password);
-
-    return data.user.email;
+    await updateProfile((auth?.currentUser as User) || null, {
+      displayName: userName,
+      photoURL: imageUrl,
+    });
+    return data.user;
   }
 );
 
 export const loginUser = createAsyncThunk(
-  'user/loginUser',
-  async ({ email, password }: ICredential) => {
+  "user/loginUser",
+  async ({ email, password }: ILoginCredential) => {
     const data = await signInWithEmailAndPassword(auth, email, password);
 
-    return data.user.email;
+    return data.user;
   }
 );
 
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<string | null>) => {
-      state.user.email = action.payload;
+    setUser: (state, action: PayloadAction<Partial<User> | null>) => {
+      state.user = action.payload;
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
@@ -66,11 +73,11 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(createUser.fulfilled, (state, action) => {
-        state.user.email = action.payload;
+        state.user = action.payload;
         state.isLoading = false;
       })
       .addCase(createUser.rejected, (state, action) => {
-        state.user.email = null;
+        state.user = null;
         state.isLoading = false;
         state.isError = true;
         state.error = action.error.message!;
@@ -81,11 +88,11 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.user.email = action.payload;
+        state.user = action.payload;
         state.isLoading = false;
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.user.email = null;
+        state.user = null;
         state.isLoading = false;
         state.isError = true;
         state.error = action.error.message!;
