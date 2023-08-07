@@ -1,6 +1,6 @@
-import { GiHamburgerMenu } from "react-icons/gi";
+import { GiHamburgerMenu,GiNotebook } from "react-icons/gi";
 import {
-  BiSolidDashboard,
+
   BiSolidNotepad,
   BiLogOutCircle,
 } from "react-icons/bi";
@@ -79,8 +79,8 @@ const DashboardLayout = () => {
                    to="/dashboard"
                    className="  font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out flex items-center gap-1"
                  >
-                   <BiSolidDashboard />
-                   <span className="text-sm lg:text-lg">Dashboard</span>
+                   <GiNotebook />
+                   <span className="text-sm lg:text-lg">My Notes</span>
                  </Link>
                  <Link
                    to="/dashboard/add-notes"

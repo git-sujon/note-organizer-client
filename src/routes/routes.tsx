@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import LoginPage from "../pages/Login";
 import SignUpPage from "../pages/SignUp";
-import Dashboard from "../pages/Dashboard";
+import MyNotes from "../pages/MyNotes";
 import AddNotes from "../pages/AddNotes";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import App from "../App";
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
     children:[
       {
          path:'/dashboard',
-         element:<Dashboard/>
+         element:<MyNotes/>
       },
       {
          path:'/dashboard/add-notes',
