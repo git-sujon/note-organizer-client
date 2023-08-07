@@ -1,33 +1,56 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { INotes } from "../interface/globalInterface";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetSingleNoteQuery, useUpdateNoteMutation } from "../redux/api/apiSlice";
+import PageLoader from "./UI/PageLoader";
+import statusPromiseHandler from "./util/statusPromise";
 
 const EditNote = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { data, isLoading } = useGetSingleNoteQuery(id!);
+    const [updateNote] = useUpdateNoteMutation()
 
-    const { id } = useParams();
+ 
+  const note = data?.data;
 
-    console.log("id:", id)
-
-
-    const {
-        handleSubmit,
-        register,
-        formState: { errors },
-      } = useForm<Partial<INotes>>();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<Partial<INotes>>();
 
 
-      const onSubmit: SubmitHandler<Partial<INotes>> = async (inputData) => {
+  if (isLoading) {
+    return <PageLoader />;
+   }
+ 
+   const onSubmit: SubmitHandler<Partial<INotes>> = async (inputData) => {
+    const note = {
+      title: inputData.title,
+      notesDetails: inputData.notesDetails,
+      category: inputData.category,
+      imgUrl: inputData.imgUrl,
+      tags: inputData.tags,
+    };
 
-      console.log("inputData:", inputData)
+    if (inputData?.tags) {
+      const tagsArray = inputData.tags
+        .split(",")
+        .map((tag: string) => ({ tagName: tag.trim() }));
+      note.tags = tagsArray;
+    }
+    const result = await updateNote({id, data: note });
 
-      
-      };
-
+    if (result) {
+      await statusPromiseHandler(result, navigate, "/dashboard");
+    }
+  };
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="">
-          <div className=" md:px-5 lg:px-20 mt-10">
+          <div className=" md:px-5 lg:px-20 ">
             <h1 className="text-2xl lg:text-4xl font-bold text-slate-900">
               Edit Note
             </h1>
@@ -43,7 +66,8 @@ const EditNote = () => {
                     placeholder="title..."
                     id="title"
                     className="ml-2 outline-none py-1 px-2  border-2 rounded-md"
-                    {...register("title", { required: "Title is required" })}
+                    defaultValue={note?.title}
+                    {...register("title")}
                   />
                 </div>
                 {/* category  */}
@@ -56,9 +80,8 @@ const EditNote = () => {
                     placeholder="category name...."
                     id="category"
                     className="ml-2 outline-none py-1 px-2  border-2 rounded-md"
-                    {...register("category", {
-                      required: "Category is required",
-                    })}
+                    defaultValue={note?.category}
+                    {...register("category")}
                   />
                 </div>
               </div>
@@ -78,6 +101,7 @@ const EditNote = () => {
                     type="text"
                     placeholder="(optional)"
                     id="imgUrl"
+                    defaultValue={note?.imgUrl}
                     className=" ml-2 outline-none py-1 px-2  border-2 rounded-md"
                     {...register("imgUrl")}
                   />
@@ -90,6 +114,7 @@ const EditNote = () => {
                     type="text"
                     placeholder="separate with comma ','"
                     id="tags"
+                    defaultValue={note?.tags.map((tag:{tagName:string}) => tag.tagName)}
                     className=" ml-2 outline-none py-1 px-2  border-2 rounded-md"
                     {...register("tags")}
                   />
@@ -107,10 +132,9 @@ const EditNote = () => {
                   cols={20}
                   rows={10}
                   placeholder="write here..."
-                  className="w-3/5 p-4 text-gray-600 bg-amber-50  outline-none rounded-md"
-                  {...register("notesDetails", {
-                    required: "Description is required",
-                  })}
+                  className="w-3/5 p-4 text-gray-600 bg-amber-50 border border-amber-500  outline-none rounded-md"
+                  defaultValue={note?.notesDetails}
+                  {...register("notesDetails")}
                 ></textarea>
                 <p className="text-red-500">
                   {errors?.notesDetails ? errors.notesDetails.message : ""}

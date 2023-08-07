@@ -1,19 +1,17 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { INotes } from "../interface/globalInterface";
 import { useAddNoteMutation } from "../redux/api/apiSlice";
-import { toast } from "react-hot-toast";
 import { useAppSelector } from "../redux/hooks";
+import statusPromiseHandler from "../components/util/statusPromise";
+import { useNavigate } from "react-router-dom";
 
 const AddNotes = () => {
-  const { user} = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.user);
   const [addNote] = useAddNoteMutation();
-
-
-  
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
-    reset,
     formState: { errors },
   } = useForm<Partial<INotes>>();
 
@@ -26,33 +24,30 @@ const AddNotes = () => {
       tags: inputData.tags,
       privacy: "Private",
       userinfo: {
-        userEmail:user?.email ,
-        userName:user?.displayName ,
-        userImgUrl:user?.photoURL 
-      }
+        userEmail: user?.email,
+        userName: user?.displayName,
+        userImgUrl: user?.photoURL,
+      },
     };
 
-    if (note?.tags) {
-      const tagsArray = note.tags
+    if (inputData?.tags) {
+      const tagsArray = inputData.tags
         .split(",")
-        .map((tag) => ({ tagName: tag.trim() }));
+        .map((tag: string) => ({ tagName: tag.trim() }));
       note.tags = tagsArray;
     }
-
-   
- 
     const result = await addNote({ data: note });
 
-    console.log("result:", result);
-    console.log("note:", note);
-    toast.success("Book Added Success");
+    if (result) {
+      await statusPromiseHandler(result, navigate, "/dashboard");
+    }
   };
 
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="">
-          <div className=" md:px-5 lg:px-20 mt-10">
+          <div className=" md:px-5 lg:px-20 ">
             <h1 className="text-2xl lg:text-4xl font-bold text-slate-900">
               Add A Note
             </h1>
@@ -132,7 +127,7 @@ const AddNotes = () => {
                   cols={20}
                   rows={10}
                   placeholder="write here..."
-                  className="w-3/5 p-4 text-gray-600 bg-amber-50 outline-none rounded-md"
+                  className="w-3/5 p-4 text-gray-600 bg-amber-50 border border-amber-500 outline-none rounded-md"
                   {...register("notesDetails", {
                     required: "Description is required",
                   })}

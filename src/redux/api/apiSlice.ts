@@ -27,6 +27,7 @@ export const api = createApi({
     }),
     getSingleNote: builder.query({
       query: (id: string) => `/notes/${id}`,
+      providesTags: ["addNote", "updateNote", "deleteNote"],
     }),
 
     addNote: builder.mutation({
