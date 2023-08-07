@@ -1,13 +1,28 @@
 import { TbEdit } from "react-icons/tb";
 import { BsTrash } from "react-icons/bs";
+import { INotes } from "../interface/globalInterface";
+import { useDeleteNoteMutation } from "../redux/api/apiSlice";
+import { toast } from "react-hot-toast";
 
-const NoteCard = ({ note }) => {
+const NoteCard: React.FC<{ note: INotes }> = ({ note }) => {
+  const [deleteNote, { error}] = useDeleteNoteMutation();
 
-    const deleteHandler = () => {
-        const confirmation = window.confirm("Do you want to delete?")
+  const deleteHandler = async (id: string) => {
+    const confirmation = window.confirm("Do you want to delete?");
+    if (confirmation) {
+      const result = await deleteNote({ _id: id });
 
+      if ('data' in result) {
+        const message = result.data.message;
+        toast.success(message);
+      } else {
+        toast.error("Something Went Wrong");
+      }
     }
-
+    if (error) {
+      toast.error("Something Went Wrong");
+    }
+  };
 
   const formattedDate = new Date(note?.createdAt).toLocaleDateString();
   return (
@@ -19,13 +34,7 @@ const NoteCard = ({ note }) => {
           <h3 className="text-lg font-bold text-gray-900 sm:text-xl h-16">
             {note?.title}
           </h3>
-          {note?.imgUrl && (
-            <img
-              src={note?.imgUrl}
-              className="w-full"
-              alt=""
-            />
-          )}
+          {note?.imgUrl && <img src={note?.imgUrl} className="w-full" alt="" />}
         </div>
       </div>
 
@@ -49,7 +58,7 @@ const NoteCard = ({ note }) => {
           <button className="">
             <TbEdit />
           </button>
-          <button onClick={()=> deleteHandler()} className="">
+          <button onClick={() => deleteHandler(note?._id)} className="">
             <BsTrash />
           </button>
         </div>
