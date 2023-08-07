@@ -1,52 +1,27 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { INotes } from "../interface/globalInterface";
-import { useAddNoteMutation } from "../redux/api/apiSlice";
-import { toast } from "react-hot-toast";
-import { useAppSelector } from "../redux/hooks";
+import { useParams } from "react-router-dom";
 
-const AddNotes = () => {
-  const { user} = useAppSelector((state) => state.user);
-  const [addNote] = useAddNoteMutation();
+const EditNote = () => {
+
+    const { id } = useParams();
+
+    console.log("id:", id)
 
 
-  
-  const {
-    handleSubmit,
-    register,
-    reset,
-    formState: { errors },
-  } = useForm<Partial<INotes>>();
+    const {
+        handleSubmit,
+        register,
+        formState: { errors },
+      } = useForm<Partial<INotes>>();
 
-  const onSubmit: SubmitHandler<Partial<INotes>> = async (inputData) => {
-    const note = {
-      title: inputData.title,
-      notesDetails: inputData.notesDetails,
-      category: inputData.category,
-      imgUrl: inputData.imgUrl,
-      tags: inputData.tags,
-      privacy: "Private",
-      userinfo: {
-        userEmail:user?.email ,
-        userName:user?.displayName ,
-        userImgUrl:user?.photoURL 
-      }
-    };
 
-    if (note?.tags) {
-      const tagsArray = note.tags
-        .split(",")
-        .map((tag) => ({ tagName: tag.trim() }));
-      note.tags = tagsArray;
-    }
+      const onSubmit: SubmitHandler<Partial<INotes>> = async (inputData) => {
 
-   
- 
-    const result = await addNote({ data: note });
+      console.log("inputData:", inputData)
 
-    console.log("result:", result);
-    console.log("note:", note);
-    toast.success("Book Added Success");
-  };
+      
+      };
 
   return (
     <div>
@@ -54,7 +29,7 @@ const AddNotes = () => {
         <div className="">
           <div className=" md:px-5 lg:px-20 mt-10">
             <h1 className="text-2xl lg:text-4xl font-bold text-slate-900">
-              Add A Note
+              Edit Note
             </h1>
             <div className="space-y-4 mt-10">
               <div className="flex flex-wrap items-center gap-5">
@@ -132,7 +107,7 @@ const AddNotes = () => {
                   cols={20}
                   rows={10}
                   placeholder="write here..."
-                  className="w-3/5 p-4 text-gray-600 bg-amber-50 outline-none rounded-md"
+                  className="w-3/5 p-4 text-gray-600 bg-amber-50  outline-none rounded-md"
                   {...register("notesDetails", {
                     required: "Description is required",
                   })}
@@ -153,4 +128,4 @@ const AddNotes = () => {
   );
 };
 
-export default AddNotes;
+export default EditNote;

@@ -7,7 +7,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, isLoading }) => {
   }
 
   return (
-    <div id="profile" className="space-y-3">
+    <div id="profile" className="space-y-3 text-white">
       <img
         src={user?.photoURL ?? ""}
         alt={user?.displayName ?? ""}
@@ -15,10 +15,10 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, isLoading }) => {
       />
 
       <div>
-        <h2 className="font-medium text-xs md:text-sm text-center text-teal-500">
+        <h2 className="font-medium text-xs md:text-sm text-center ">
           {user?.displayName}
         </h2>
-        <p className="text-xs text-gray-500 text-center">{user?.email}</p>
+        <p className="text-xs text-gray-100 text-center">{user?.email}</p>
       </div>
     </div>
   );

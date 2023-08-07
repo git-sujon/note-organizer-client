@@ -3,6 +3,7 @@ import { BsTrash } from "react-icons/bs";
 import { INotes } from "../interface/globalInterface";
 import { useDeleteNoteMutation } from "../redux/api/apiSlice";
 import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const NoteCard: React.FC<{ note: INotes }> = ({ note }) => {
   const [deleteNote, { error}] = useDeleteNoteMutation();
@@ -26,8 +27,8 @@ const NoteCard: React.FC<{ note: INotes }> = ({ note }) => {
 
   const formattedDate = new Date(note?.createdAt).toLocaleDateString();
   return (
-    <div className="relative block overflow-hidden rounded-lg border border-slate-300 p-4 sm:p-6 lg:p-8">
-      <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
+    <div className="relative block overflow-hidden rounded-lg border bg-amber-50 border-amber-300 p-4 sm:p-6 lg:p-8">
+      <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-amber-300 via-amber-700 to-amber-900"></span>
 
       <div className="sm:flex sm:justify-between sm:gap-4">
         <div>
@@ -55,9 +56,9 @@ const NoteCard: React.FC<{ note: INotes }> = ({ note }) => {
           <dd className="text-xs text-gray-500">{note?.category}</dd>
         </div>
         <div className="flex items-center gap-5 text-xl">
-          <button className="">
+          <Link to={`/dashboard/${note?._id}`} className="">
             <TbEdit />
-          </button>
+          </Link>
           <button onClick={() => deleteHandler(note?._id)} className="">
             <BsTrash />
           </button>

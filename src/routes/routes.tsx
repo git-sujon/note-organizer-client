@@ -6,6 +6,7 @@ import AddNotes from "../pages/AddNotes";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import App from "../App";
 import Home from "../pages/Home";
+import EditNote from "../components/EditNote";
 
 const router = createBrowserRouter([
    {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
          path:'/dashboard/add-notes',
          element:<AddNotes/>
+      },
+      {
+         path:'/dashboard/:id',
+         element:<EditNote/>
       },
     ]
    },

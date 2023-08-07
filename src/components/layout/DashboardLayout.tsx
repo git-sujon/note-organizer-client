@@ -46,13 +46,13 @@ const DashboardLayout = () => {
   return (
 
     <>  <Toaster />
-        <div className="font-poppins antialiased">
+        <div className="bg-[#FEFCF3] antialiased">
          
-         <div className="h-full w-screen flex flex-row">
+         <div className="h-full w-screen flex flex-row ">
            {/* Hamburger Menu Button */}
            <button
              onClick={() => setSidebarOpen(!sidebarOpen)}
-             className="p-2 border-2 bg-white rounded-md border-gray-200 shadow-lg text-gray-500 focus:bg-teal-500 focus:outline-none focus:text-white fixed top-0 left-0 z-10 sm:hidden"
+             className="p-2 border-2 bg-white rounded-md border-gray-200 shadow-lg text-gray-900 focus:bg-blue-500 focus:outline-none focus:text-white fixed top-0 left-0 z-10 sm:hidden"
            >
              <GiHamburgerMenu />
            </button>
@@ -60,12 +60,12 @@ const DashboardLayout = () => {
            {/* Sidebar */}
            <div
              id="sidebar"
-             className={`bg-white min-h-screen md:block shadow-xl px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden transition-transform duration-300 ease-in-out ${
+             className={`bg-[#1A120B] text-white min-h-screen md:block shadow-xl px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden transition-transform duration-300 ease-in-out ${
                sidebarOpen ? "translate-x-0 " : "-translate-x-full"
              } md:translate-x-0 `}
            >
              <div className="space-y-6 md:space-y-10 mt-4">
-               <h1 className="font-bold text-sm md:text-xl text-center flex items-center gap-1">
+               <h1 className="font-bold text-sm md:text-lg text-center flex items-center gap-1">
                  <BiSolidNotepad />
                  Note Organizer
                </h1>
@@ -77,21 +77,21 @@ const DashboardLayout = () => {
                <div id="menu" className="flex flex-col space-y-2">
                  <Link
                    to="/dashboard"
-                   className="  font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out flex items-center gap-1"
+                   className="  font-medium border-b hover:border-b-0 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out flex items-center gap-1"
                  >
                    <GiNotebook />
                    <span className="text-sm lg:text-lg">My Notes</span>
                  </Link>
                  <Link
                    to="/dashboard/add-notes"
-                   className="  font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out flex items-center gap-1"
+                   className="  font-medium border-b hover:border-b-0 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out flex items-center gap-1"
                  >
                    <FiPaperclip />
                    <span className="text-sm lg:text-lg">Add Notes</span>
                  </Link>
                  <button
                    onClick={() => handleLogout()}
-                   className="  font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out flex items-center gap-1"
+                   className="  font-medium border-b hover:border-b-0 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out flex items-center gap-1"
                  >
                    <BiLogOutCircle />
                    <span className="text-sm lg:text-lg"> Sign Out</span>
