@@ -1,12 +1,12 @@
 # Note Organizer App
 
-![App Screenshot](screenshot.png)
+dis
 
 Welcome to the Note Organizer App! This is a fullstack web application developed as part of the Fullstack Web Developer task for Headless Technologies Ltd.
 
 ## Live Site
 
-Check out the live site: [https://note-organizer-ee198.web.app/](https://note-organizer-ee198.web.app/)
+Check out the live site: [https://simple-note-organizer.netlify.app/](https://simple-note-organizer.netlify.app/)
 
 ## Task Overview
 
@@ -42,7 +42,7 @@ The objective of this project is to create a note organizer application that all
 - Implemented a search function that allows users to find individual notes based on titles or content.
 - Enhanced user experience with features like autosave for seamless note-taking.
 
-### Bonus Task (Optional)
+### Unit Test
 
 - Implemented unit tests for important components and backend API endpoints using Jest.
 

@@ -7,6 +7,7 @@ import DashboardLayout from "../components/layout/DashboardLayout";
 import App from "../App";
 import Home from "../pages/Home";
 import EditNote from "../components/EditNote";
+import PrivateRoute from "./privateRoute";
 
 const router = createBrowserRouter([
    {
@@ -33,15 +34,15 @@ const router = createBrowserRouter([
     children:[
       {
          path:'/dashboard',
-         element:<MyNotes/>
+         element:<PrivateRoute><MyNotes/></PrivateRoute>
       },
       {
          path:'/dashboard/add-notes',
-         element:<AddNotes/>
+         element:<PrivateRoute><AddNotes/></PrivateRoute>
       },
       {
          path:'/dashboard/:id',
-         element:<EditNote/>
+         element:<PrivateRoute><EditNote/></PrivateRoute>
       },
     ]
    },
