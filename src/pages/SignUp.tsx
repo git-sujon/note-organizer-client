@@ -7,7 +7,7 @@ import {
   createUser,
   createUserWithGoogle,
 } from "../redux/features/user/userSlice";
-import authPromiseHandler from "../components/util/authPromise";
+import authPromiseHandler from "../components/hooks/authPromise";
 
 const SignUpPage = () => {
   const {

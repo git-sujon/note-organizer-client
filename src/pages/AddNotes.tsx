@@ -2,7 +2,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { INotes } from "../interface/globalInterface";
 import { useAddNoteMutation } from "../redux/api/apiSlice";
 import { useAppSelector } from "../redux/hooks";
-import statusPromiseHandler from "../components/util/statusPromise";
+import statusPromiseHandler from "../components/hooks/statusPromise";
 import { useNavigate } from "react-router-dom";
 
 const AddNotes = () => {

@@ -7,7 +7,7 @@ import {
   loginUser,
 } from "../redux/features/user/userSlice";
 import { useAppDispatch } from "../redux/hooks";
-import authPromiseHandler from "../components/util/authPromise";
+import authPromiseHandler from "../components/hooks/authPromise";
 
 const LoginPage = () => {
 

@@ -3,7 +3,7 @@ import { INotes } from "../interface/globalInterface";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetSingleNoteQuery, useUpdateNoteMutation } from "../redux/api/apiSlice";
 import PageLoader from "./UI/PageLoader";
-import statusPromiseHandler from "./util/statusPromise";
+import statusPromiseHandler from "./hooks/statusPromise";
 
 const EditNote = () => {
   const { id } = useParams();

@@ -19,10 +19,11 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_BASE_URL}`,
   }) as CustomBaseQueryFn,
+  tagTypes: ["addNote", "updateNote", "deleteNote"],
 
   endpoints: (builder) => ({
     getAllNotes: builder.query({
-      query: () => `/notes`,
+      query: ({page, limit}) => `/notes?page=${page+1}&limit=${limit}`,
       providesTags: ["addNote", "updateNote", "deleteNote"],
     }),
     getSingleNote: builder.query({
