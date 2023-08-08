@@ -23,7 +23,8 @@ export const api = createApi({
 
   endpoints: (builder) => ({
     getAllNotes: builder.query({
-      query: ({page, limit}) => `/notes?page=${page+1}&limit=${limit}`,
+      query: ({ page, limit, sortField, sortValue }) =>
+        `/notes?page=${page + 1}&limit=${limit}&${sortField}=${sortValue}`,
       providesTags: ["addNote", "updateNote", "deleteNote"],
     }),
     getSingleNote: builder.query({
@@ -54,6 +55,24 @@ export const api = createApi({
       }),
       invalidatesTags: ["deleteNote"],
     }),
+
+    // catagories APi
+    getAllCatagories: builder.query({
+      query: () => `/catagories`,
+      providesTags: ["addNote"],
+    }),
+    getSingleCategory: builder.query({
+      query: (id: string) => `/catagories/${id}`,
+      providesTags: ["addNote"],
+    }),
+
+    deleteCategory: builder.mutation({
+      query: ({ _id }) => ({
+        url: `/catagories/${_id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [],
+    }),
   }),
 });
 
@@ -63,4 +82,7 @@ export const {
   useAddNoteMutation,
   useUpdateNoteMutation,
   useDeleteNoteMutation,
+  useGetAllCatagoriesQuery,
+  useGetSingleCategoryQuery,
+  useDeleteCategoryMutation,
 } = api;

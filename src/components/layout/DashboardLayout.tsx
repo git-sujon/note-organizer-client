@@ -16,6 +16,7 @@ import { setLoading, setUser } from "../../redux/features/user/userSlice";
 import toast  from "react-hot-toast";
 import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
+import AllCatagories from "../AllCatagories";
 const DashboardLayout = () => {
   const { user, isLoading } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
@@ -101,6 +102,7 @@ const DashboardLayout = () => {
                      <MdFormatListBulletedAdd className="text-2xl" /> Catagories
                    </p>
                    <hr />
+                   <AllCatagories />
                  </div>
                </div>
              </div>

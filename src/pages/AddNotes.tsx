@@ -111,10 +111,13 @@ const AddNotes = () => {
                     placeholder="separate with comma ','"
                     id="tags"
                     className=" ml-2 outline-none py-1 px-2  border-2 rounded-md"
-                    {...register("tags")}
+                    {...register("tags",{ required: "Minimum one tag is required" })}
                   />
                 </div>
               </div>
+              <p className="text-red-500">
+                {errors?.tags ? errors.tags.message : ""}
+              </p>
 
               {/* description  */}
 

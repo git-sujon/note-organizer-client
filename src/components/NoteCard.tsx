@@ -1,11 +1,17 @@
 import { TbEdit } from "react-icons/tb";
 import { BsTrash } from "react-icons/bs";
 import { INotes } from "../interface/globalInterface";
-import { useDeleteNoteMutation } from "../redux/api/apiSlice";
+import { useDeleteNoteMutation, useGetSingleCategoryQuery } from "../redux/api/apiSlice";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 const NoteCard: React.FC<{ note: INotes }> = ({ note }) => {
+
+  
+  const {data} = useGetSingleCategoryQuery(note.category)
+
+
+
   const [deleteNote, { error}] = useDeleteNoteMutation();
 
   const deleteHandler = async (id: string) => {
@@ -24,7 +30,7 @@ const NoteCard: React.FC<{ note: INotes }> = ({ note }) => {
       toast.error("Something Went Wrong");
     }
   };
-
+  const categoryName = data?.data?.title
   const formattedDate = new Date(note?.createdAt).toLocaleDateString();
   return (
     <div className="relative block overflow-hidden rounded-lg border bg-amber-50 border-amber-300 p-4 sm:p-6 lg:p-8">
@@ -53,7 +59,7 @@ const NoteCard: React.FC<{ note: INotes }> = ({ note }) => {
 
         <div className="flex flex-col-reverse">
           <dt className="text-sm font-medium text-gray-600">Category</dt>
-          <dd className="text-xs text-gray-500">{note?.category}</dd>
+          <dd className="text-xs text-gray-500">{categoryName}</dd>
         </div>
         <div className="flex items-center gap-5 text-xl">
           <Link to={`/dashboard/${note?._id}`} className="">
@@ -67,5 +73,6 @@ const NoteCard: React.FC<{ note: INotes }> = ({ note }) => {
     </div>
   );
 };
+
 
 export default NoteCard;

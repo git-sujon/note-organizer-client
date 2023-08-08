@@ -1,7 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { INotes } from "../interface/globalInterface";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetSingleNoteQuery, useUpdateNoteMutation } from "../redux/api/apiSlice";
+import { useGetSingleCategoryQuery, useGetSingleNoteQuery, useUpdateNoteMutation } from "../redux/api/apiSlice";
 import PageLoader from "./UI/PageLoader";
 import statusPromiseHandler from "./hooks/statusPromise";
 
@@ -13,7 +13,7 @@ const EditNote = () => {
 
  
   const note = data?.data;
-
+  const {data:NoteData} = useGetSingleCategoryQuery(note?.category)
   const {
     handleSubmit,
     register,
@@ -46,6 +46,8 @@ const EditNote = () => {
       await statusPromiseHandler(result, navigate, "/dashboard");
     }
   };
+  const categoryName = NoteData?.data?.title
+  
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -80,8 +82,9 @@ const EditNote = () => {
                     placeholder="category name...."
                     id="category"
                     className="ml-2 outline-none py-1 px-2  border-2 rounded-md"
-                    defaultValue={note?.category}
-                    {...register("category")}
+                    defaultValue={categoryName}
+                    readOnly
+
                   />
                 </div>
               </div>

@@ -23,3 +23,12 @@ export interface INotes {
   privacy: "Public" | "private";
   createdAt:string
 }
+
+
+export interface ICategory {
+  _id: string;
+  title: string;
+  userInfo: {
+    userEmail: string;
+  };
+}
